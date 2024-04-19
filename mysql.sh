@@ -5,7 +5,7 @@ TIMESTAMP=$(date +%F-%H-%M-%S)
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOGFILE=/tmp/$SCRIPT_NAME-$TIMESTAMP.log
 R="\e[31m"
-W="\e[32m"
+G="\e[32m"
 N="\e[0m"
 
 
@@ -33,8 +33,18 @@ VALIDATE $? "enable mysql"
 systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "start mysql"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
-VALIDATE $? "setting up root password"
+#mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+#VALIDATE $? "setting up root password"
+
+mysql -h DB.avyan.site -uroot -pExpenseApp@1 -e 'show databases;' &>>$LOGFILE
+
+if [ $? -ne 0 ]
+then 
+    mysql_secure_installation --set-root-pass ExpenseApp@1
+    VALIDATE $? "isetting up root password"
+else
+    echo "my sql root password already set"
+fi
 
 
 
