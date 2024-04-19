@@ -8,7 +8,7 @@ R="\e[31m"
 G="\e[32m"
 N="\e[0m"
 echo "pls enter DB password"
-read -s mysql-root-password
+read -s mysql_root_password
 
 VALIDATE (){
     if [ $1 -ne 0 ]
@@ -37,11 +37,11 @@ VALIDATE $? "start mysql"
 #mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
 #VALIDATE $? "setting up root password"
 
-mysql -h DB.avyan.site -uroot -p${mysql-root-password} -e 'show databases;' &>>$LOGFILE
+mysql -h DB.avyan.site -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
 
 if [ $? -ne 0 ]
 then 
-    mysql_secure_installation --set-root-pass ${mysql-root-password}
+    mysql_secure_installation --set-root-pass ${mysql_root_password}
     VALIDATE $? "isetting up root password"
 else
     echo "my sql root password already set"
