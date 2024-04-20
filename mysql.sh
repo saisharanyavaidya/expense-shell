@@ -37,7 +37,7 @@ VALIDATE $? "start mysql"
 #mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
 #VALIDATE $? "setting up root password"
 
-mysql -h DB.avyan.site -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
+mysql -h db.avyan.site -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
 
 if [ $? -ne 0 ]
 then 
